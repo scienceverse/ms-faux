@@ -1,0 +1,117 @@
+---
+title: Faux
+subtitle: An R package for data simulation from summary statistics
+date: last-modified
+authors:
+  - name: Lisa DeBruine
+    affiliation: University of Glasgow
+    orcid: 0000-0002-7523-5539
+    email: lisa.debruine@glasgow.ac.uk
+    roles: 
+    - Conceptualization 
+    - Software 
+    - Validation 
+    - Visualization 
+    - Writing - original draft 
+    corresponding: true
+bibliography: references.bib
+keywords: [simulation, software]
+abstract: |
+  Being able to simulate data allows you to prep analysis scripts for pre-registration, calculate power and sensitivity for analyses that don’t have empirical methods, create reproducible examples when your data are too big or confidential to share, enhance your understanding of statistical concepts, and create demo data for teaching and tutorials. In this paper, I will introduce the basics of simulation using the R package {faux} to simulate data from summary statistics. Two conrete examples are presented. First, a fixed 2x2 within-between design demonstrating how to do a power analysis for designs that do not have empirical solutions. Second, simulating data from a mixed design where trials are crossed with subjects in order to understand how the simulation parameters correspond to the output.
+---
+
+```{r}
+#| label: setup
+library(faux)
+```
+
+
+## Introduction
+
+### Why simulate data?
+
+#### Pre-registration
+
+#### Power and sensitivity
+
+- You can get empirical power analyses for simple designs, like a paired samples t-test or 1-way ANOVA.
+- This gets trickier is you have unbalanced subject numbers, although {Superpower} can do this (by using a simulation method that was derived from an early version of faux)
+- However, if you can simulate your data, you can analyse it with any method and calculate power, sensitivity, or any other metric you are interested in.
+- The caveat here is that it is not always straightforward to know how to simulate data realistically, often because you only have summary data from existing literature.
+- Example of this in @sec-fixed-power below.
+
+#### Reproducible examples
+
+- Although open data sharing should be something we strive to achieve, it is not always legally or ethically possible
+- Datasets can also be too big to feasibly transfer or analyse
+- You can use simulation to create a dataset that has the same summary parameters at the original, but distinct individual values or is much smaller.
+
+#### Enhance understanding
+
+- Using summary parameters to generate data can enhance understanding
+- Plot or analyse the simulated data to see how the summary parameters are reflected in the plots or results
+- Change simulation parameters to see how plots and analyses change
+- Example of this in @sec-mixed-design below.
+
+#### Demo teaching data 
+
+### Existing methods
+
+- base R
+- excel
+- simr
+
+
+### Faux
+
+- what gaps does faux fill?
+- focus on summary stats for simulation
+- flexible wide and long data designs
+- shiny app
+
+## Examples
+
+### Fixed design
+
+
+#### Simulate data
+
+```{r}
+fixed <- sim_design(
+  within = list(time = c(day = "Day", night = "Night")),
+  between = list(pet = c(cat = "Cats", dog = "Dogs")),
+  mu = c(day_cat = 10, night_cat = 15, day_dog = 20, night_dog = 10),
+  sd = 3.5,
+  n = c(cat = 20, dog = 25), 
+  vardesc = c(pet = "Pet Type", time = "Time"),
+  dv = list(score = "Awakeness Score"), 
+  long = TRUE
+)
+```
+
+
+```{r}
+plot(fixed)
+```
+
+
+```{r}
+get_params(fixed)
+```
+
+
+```{r}
+get_design(fixed)
+```
+
+#### Power analysis {#sec-fixed-power}
+
+### Mixed design {#sec-mixed-design}
+
+#### Get parameters
+
+#### Simulate data
+
+## Discussion
+
+## References
