@@ -96,12 +96,12 @@ plot(fixed)
 
 
 ```{r}
-get_params(fixed)
+sample_params(fixed)
 ```
 
 
 ```{r}
-get_design(fixed)
+sim_params(fixed)
 ```
 
 #### Power analysis {#sec-fixed-power}
